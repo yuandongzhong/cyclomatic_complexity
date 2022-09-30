@@ -1,3 +1,3 @@
-from cyclo import calculate
+from cyclo.calculate import calculate
 
-calculate.start("birds.py")
+calculate("birds.py")

@@ -2,7 +2,7 @@ import ast
 from .analyzer import Analyzer
 
 
-def start(file_path):
+def calculate(file_path):
     with open(file_path, "r") as source:
         # Transform the source code to AST
         tree = ast.parse(source.read())
@@ -15,7 +15,8 @@ def start(file_path):
     analyzer = Analyzer()
     analyzer.visit(tree)
     analyzer.report()
+    return analyzer
 
 
 if __name__ == '__main__':
-    start()
+    calculate()
