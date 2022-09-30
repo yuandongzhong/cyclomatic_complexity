@@ -3,6 +3,12 @@ from .analyzer import Analyzer
 
 
 def calculate(file_path):
+    """
+    Calculate the cyclomatic complexity of a Python file
+
+    :param file_path: The file path of the file
+    :return: Return the analyzer
+    """
     with open(file_path, "r") as source:
         # Transform the source code to AST
         tree = ast.parse(source.read())
