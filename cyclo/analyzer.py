@@ -1,7 +1,7 @@
-import sys
-
 import ast
+import sys
 from tabulate import tabulate
+
 
 class Analyzer(ast.NodeVisitor):
     def __init__(self):
@@ -71,22 +71,3 @@ class Analyzer(ast.NodeVisitor):
         
         print(f"Total: {self.total}")
         print(tabulate(sorted_metrics))
-
-
-def calculate():
-    with open("birds.py", "r") as source:
-        # Transform the source code to AST
-        tree = ast.parse(source.read())
-        
-    for node in ast.walk(tree):
-        for child in ast.iter_child_nodes(node):
-            if isinstance(node, ast.ClassDef):
-                child.parent = node
-        
-    analyzer = Analyzer()
-    analyzer.visit(tree)
-    analyzer.report()
-
-
-if __name__ == '__main__':
-    calculate()
