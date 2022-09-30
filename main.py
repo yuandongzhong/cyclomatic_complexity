@@ -1,10 +1,12 @@
-import ast
 import sys
 
+import ast
+from tabulate import tabulate
 
 class Analyzer(ast.NodeVisitor):
     def __init__(self):
         self.cyclomatic_complexity = 0
+        self.total = 0
         self.function_dict = {}
 
     def visit_If(self, node):
@@ -63,12 +65,16 @@ class Analyzer(ast.NodeVisitor):
         self.function_dict[function_name] = analyzer.cyclomatic_complexity + 1
 
     def report(self):
-        print(self.function_dict)
-        print(f"{sys.argv[0]}: {self.cyclomatic_complexity}")
+        metrics_dict = {**self.function_dict, **{sys.argv[0]: self.cyclomatic_complexity}}
+        self.total = sum(metrics_dict.values())
+        sorted_metrics = sorted(metrics_dict.items(), key=lambda item: item[1], reverse=True)
+        
+        print(f"Total: {self.total}")
+        print(tabulate(sorted_metrics))
 
 
 def calculate():
-    with open("main.py", "r") as source:
+    with open("birds.py", "r") as source:
         # Transform the source code to AST
         tree = ast.parse(source.read())
         
